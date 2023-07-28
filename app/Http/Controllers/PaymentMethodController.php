@@ -27,7 +27,7 @@ class PaymentMethodController extends Controller
         ]);
 
         $request->validate([
-            "user_id" => "required|integer|unique:shipping_information,user_id",
+            "user_id" => "required|integer",
             "card_number" => "required|string",
             "name_on_card" => "required|string",
             "expire_date" => "required|string",

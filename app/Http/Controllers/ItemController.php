@@ -73,16 +73,22 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateItemRequest $request, Item $item)
+    public function update(UpdateItemRequest $request, string $id)
     {
-        //
+        $request->validate([
+            'quantity' => 'integer'
+        ]);
+
+        $item = Item::find($id);
+        $item->update(['quantity' => $request->input('quantity')]);
+        return $item;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Item $item)
+    public function destroy(string $id)
     {
-        //
+        return Item::destroy($id);
     }
 }

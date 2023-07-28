@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shipping_information', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->string('firstName');
-            $table->string('lastName');
             $table->foreignId('user_id');
-            $table->string('company')->nullable();
-            $table->string('address');
-            $table->string('apt')->nullable();
-            $table->string('country');
-            $table->string('state');
-            $table->string('zip');
+            $table->foreignId('order_id');
+            $table->string('card_number');
+            $table->string('name_on_card');
+            $table->string('expire_date');
+            $table->string('cvv');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shipping_information');
+        Schema::dropIfExists('payment_methods');
     }
 };

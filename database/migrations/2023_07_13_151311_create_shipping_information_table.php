@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('billing_addresses', function (Blueprint $table) {
+        Schema::create('shipping_information', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id');
             $table->string('firstName');
             $table->string('lastName');
             $table->foreignId('user_id');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('zip');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('billing_addresses');
+        Schema::dropIfExists('shipping_information');
     }
 };

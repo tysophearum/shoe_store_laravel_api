@@ -52,4 +52,12 @@ class CategoryController extends Controller
     {
         return Category::destroy($category);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function products(string $id)
+    {
+        return Category::with(['products.images'])->find($id);
+    }
 }

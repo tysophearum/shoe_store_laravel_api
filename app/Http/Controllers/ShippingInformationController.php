@@ -27,12 +27,11 @@ class ShippingInformationController extends Controller
         ]);
 
         $request->validate([
-            "user_id" => "required|integer|unique:shipping_information,user_id",
+            "order_id" => "required|integer|unique:shipping_information,order_id",
+            "user_id" => "required|integer",
             "firstName" => "required|string",
             "lastName" => "required|string",
-            "company" => "string",
             "address" => "required|string",
-            "apt" => "string",
             "country" => "required|string",
             "state" => "required|string",
             "zip" => "required|string"

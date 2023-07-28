@@ -9,5 +9,5 @@ class ShippingMethod extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'price'];
+    protected $fillable = ['user_id', 'name', 'price', 'order_id'];
 }

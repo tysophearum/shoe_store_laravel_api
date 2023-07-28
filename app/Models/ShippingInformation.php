@@ -9,5 +9,5 @@ class ShippingInformation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['firstName', 'lastName', 'user_id', 'company', 'address', 'apt', 'country', 'state', 'zip'];
+    protected $fillable = ['firstName', 'lastName', 'user_id', 'company', 'address', 'apt', 'country', 'state', 'zip', 'order_id'];
 }

@@ -85,22 +85,44 @@ class ProductController extends Controller
      */
     public function promotion(string $categoryId)
     {
-        // $category = Category::find($categoryId);
-
-        // $special_product = Product::with(['images'])->where('id', '=', $category->special_product_id)->first();
         return Product::with(['images'])->where('category_id', '=', $categoryId)->where('promotion_id', '!=', null)->get();
-        // return [
-        //     'special_product' => $special_product,
-        //     'products' => $products
-        // ];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function test(string $product)
+    public function everything()
     {
-        return Product::with(['sizes', 'images'])->where('id', '=', $product)->first();
+        $result = [];
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            $products = Product::with(['images'])->where('category_id', '=', $category->id)->where('id', '!=', $category->special_product_id)->where('promotion_id', '=', null)->get();
+            $pProducts = Product::with(['images'])->where('category_id', '=', $category->id)->where('id', '!=', $category->special_product_id)->where('promotion_id', '=', 1)->get();
+            $category->products = $products;
+            $category->propotion_products = $pProducts;
+            array_push($result, $category);
+        }
+        return $result;
+    }
+
+    /**
+     * Promote product
+     */
+    public function promote(string $id)
+    {
+        $product = Product::find($id);
+        $product->update(['promotion_id' => 1]);
+        return $product;
+    }
+
+    /**
+     * Demote product
+     */
+    public function demote(string $id)
+    {
+        $product = Product::find($id);
+        $product->update(['promotion_id' => null]);
+        return $product;
     }
 
     

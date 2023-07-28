@@ -14,4 +14,8 @@ class Item extends Model
     public function products() {
         return $this->belongsTo(Product::class);
     }
+
+    public function carts(){
+        return $this->hasOne(Cart::class);
+    }
 }
