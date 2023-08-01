@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -60,9 +61,13 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $product)
+    public function destroy(string $id)
     {
-        return Product::destroy($product);
+        $product = Product::with(['sizes', 'images'])->where('id', '=', $id)->first();
+        foreach ($product['images'] as $image) {
+            Storage::delete('public/images/' . $image['image_name']);
+        }
+        return Product::destroy($id);
     }
 
     /**

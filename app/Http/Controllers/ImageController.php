@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
 use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -43,7 +44,7 @@ class ImageController extends Controller
 
             $productImage->image_name = $filename;
 
-            $productImage->image_path = asset('storage/images/' . $filename);
+            $productImage->image_path = '/storage/images/' . $filename;
         }
         $productImage->save();
 
@@ -77,8 +78,9 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Image $image)
+    public function destroy(string $name)
     {
-        //
+        Storage::delete('public/images/' . $name);
+        return 1;
     }
 }

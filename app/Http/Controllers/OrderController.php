@@ -14,9 +14,10 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(StoreOrderRequest $request)
     {
-        //
+        $user = $request->user;
+        return Order::with(['items.product.images', 'paymentMethod', 'shippingInformation', 'shippingMethod'])->where('user_id', '=', $user->id)->get();
     }
 
     /**

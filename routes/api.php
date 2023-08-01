@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth:sanctum', AuthUser::class]], function() {
 
     Route::prefix('order')->group(function () {
         Route::post('/', [OrderController::class, 'store']);
+        Route::get('/', [OrderController::class, 'index']);
     });
 
     Route::prefix('cart')->group(function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -48,9 +49,15 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $category)
+    public function destroy(string $id)
     {
-        return Category::destroy($category);
+        $category = Category::with(['products.images'])->find($id);
+        foreach ($category['products'] as $product) {
+            foreach ($product['images'] as $image) {
+                Storage::delete('public/images/' . $image['image_name']);
+            }
+        }
+        return Category::destroy($id);
     }
 
     /**
