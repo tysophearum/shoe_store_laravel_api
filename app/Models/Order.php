@@ -24,4 +24,7 @@ class Order extends Model
     public function shippingMethod(): HasOne{
         return $this->hasOne(ShippingMethod::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

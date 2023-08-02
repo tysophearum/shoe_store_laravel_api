@@ -66,6 +66,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 });
 
 Route::group(['middleware' => ['auth:sanctum', AuthAdmin::class]], function() {
+    Route::prefix('order')->group(function () {
+        Route::get('/all', [OrderController::class, 'all']);
+    });
+
     Route::prefix('category')->group(function () {
         Route::post('/', [CategoryController::class, 'store']);
         Route::put('/{category}', [CategoryController::class, 'update']);

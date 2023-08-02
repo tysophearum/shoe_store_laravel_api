@@ -21,6 +21,15 @@ class OrderController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function all(StoreOrderRequest $request)
+    {
+        $user = $request->user;
+        return Order::with(['items.product.images', 'paymentMethod', 'shippingInformation', 'shippingMethod', 'user'])->get();
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreOrderRequest $request)
